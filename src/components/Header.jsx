@@ -2,7 +2,7 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="p-20 card bg-slate-100 mx-20 mt-20 mb-10 shadow-xl text-center text-7xl">
+    <div className="p-20 card bg-primary mx-20 mt-20 mb-10 text-center text-7xl text-base-100 shadow-2xl">
       <h1>Link Shortener App</h1>
     </div>
   );

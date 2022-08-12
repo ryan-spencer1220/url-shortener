@@ -48,7 +48,7 @@ function App() {
     <>
       <Header />;
       <form
-        className="mx-20 p-20 card bg-slate-100 flex flex-row"
+        className="mx-20 p-20 card bg-slate-100 flex flex-row shadow-2xl"
         onSubmit={handleSubmit}
       >
         <input
@@ -62,14 +62,19 @@ function App() {
           Submit
         </button>
       </form>
-      <div className="mx-20 p-20 card bg-slate-100 flex flex-row mt-10 text-xl">
+      <div className="mx-20 p-20 card bg-slate-100 flex flex-row mt-10 text-xl shadow-2xl">
         Shortened URL: {shortURL}
         {shortURL && (
           <>
             <button className="btn mx-4" onClick={handleClick}>
               Try It Out!
             </button>
-            <button className="btn" onClick={handleClick}>
+            <button
+              className="btn"
+              onClick={() => {
+                navigator.clipboard.writeText(shortURL);
+              }}
+            >
               Copy!
             </button>
           </>
