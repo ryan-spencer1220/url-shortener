@@ -5,14 +5,25 @@ import { useState } from "react";
 function App() {
   const [url, setURL] = useState("");
   const [shortURL, setShortURL] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setURL(e.target.value);
   };
 
+  const regex = new RegExp(
+    "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)"
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(url);
+
+    if (regex.exec(url)) {
+      setError("");
+    } else {
+      setError("Please enter a valid URL");
+    }
+
     const axios = require("axios");
 
     const headers = {
@@ -47,38 +58,41 @@ function App() {
   return (
     <>
       <Header />;
-      <form
-        className="mx-20 p-20 card bg-slate-100 flex flex-row shadow-2xl"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          placeholder="Enter URL here!"
-          className="input input-bordered input-primary input-lg mb-10 basis-10/12 mr-2"
-          value={url}
-          onChange={handleChange}
-        />
-        <button type="submit" className="btn basis-2/12 ml-2">
-          Submit
-        </button>
-      </form>
-      <div className="mx-20 p-20 card bg-slate-100 flex flex-row mt-10 text-xl shadow-2xl">
-        Shortened URL: {shortURL}
-        {shortURL && (
-          <>
-            <button className="btn mx-4" onClick={handleClick}>
-              Try It Out!
-            </button>
-            <button
-              className="btn"
-              onClick={() => {
-                navigator.clipboard.writeText(shortURL);
-              }}
-            >
-              Copy!
-            </button>
-          </>
-        )}
+      <div className="mx-20 p-20 card bg-slate-100  shadow-2xl">
+        <form onSubmit={handleSubmit} className="flex flex-row">
+          <input
+            type="text"
+            placeholder="Enter URL here!"
+            className="input input-bordered input-primary input-lg mb-10 basis-10/12 mr-2"
+            value={url}
+            onChange={handleChange}
+          />
+          <button type="submit" className="btn basis-2/12 ml-2 btn-secondary">
+            Submit
+          </button>
+        </form>
+        <div className="flex flex-row">
+          {error && <p>{error}</p>}
+          {shortURL && (
+            <>
+              Shortened URL: {shortURL}
+              <button
+                className="btn mx-4 btn-accent btn-xs"
+                onClick={handleClick}
+              >
+                Try It Out!
+              </button>
+              <button
+                className="btn btn-accent btn-xs"
+                onClick={() => {
+                  navigator.clipboard.writeText(shortURL);
+                }}
+              >
+                Copy!
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </>
   );
