@@ -1,6 +1,6 @@
 import "./index.css";
 import Header from "./components/Header";
-import { useState } from "react";
+import React, { useState } from "react";
 
 function App() {
   const [url, setURL] = useState("");
@@ -56,7 +56,7 @@ function App() {
   };
 
   return (
-    <>
+    <React.Fragment className="container">
       <Header />;
       <div className="mx-20 p-20 card bg-slate-100  shadow-2xl">
         <form onSubmit={handleSubmit} className="flex flex-row">
@@ -94,7 +94,7 @@ function App() {
           )}
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }
 
